@@ -914,6 +914,11 @@
               <FileType>8</FileType>
               <FilePath>..\application\RMRefereeSystemCRC.cpp</FilePath>
             </File>
+            <File>
+              <FileName>SuperCapacitor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\SuperCapacitor.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1024,7 +1029,7 @@
   <LayerInfo>
     <Layers>
       <Layer>
-        <LayName>&lt;Project Info&gt;</LayName>
+        <LayName>standard_robot</LayName>
         <LayTarg>0</LayTarg>
         <LayPrjMark>1</LayPrjMark>
       </Layer>
