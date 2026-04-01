@@ -2,9 +2,13 @@
 #include "RMRefereeSystemCRC.hpp"
 #include <string.h>
 
+
+
 /*======================================================================*/
 /*                        全局变量的初始化                               */
 /*======================================================================*/
+extern UART_HandleTypeDef huart6;
+uint8_t usart6_buf[2][USART_RX_BUF_LENGHT];
 
 RMRefereeSystemData_t            RMRefereeSystemData           = { 0 };  // 裁判系统当前帧数据
 
@@ -224,6 +228,8 @@ static void RMRefereeSystemGetData(uint8_t MypData)
     }
 }
 
+extern "C" {
+	
 uint8_t get_robot_id(void)
 {
     return robot_status_0x0201.robot_id;
@@ -260,4 +266,58 @@ void RMRefereeSystemParse(void)
     RMRefereeSystemGetData(MyRefereeSys8Data);
 }
 
+void referee_usart_task(void const * argument)
+{
+    // 1. 初始化串口（双缓存 DMA）
+    usart6_init(usart6_buf[0], usart6_buf[1], USART_RX_BUF_LENGHT);
 
+    while(1)
+    {
+        osDelay(10);
+    }
+}
+
+void USART6_IRQHandler(void)
+{
+    if(USART6->SR & UART_FLAG_IDLE)
+    {
+        __HAL_UART_CLEAR_IDLEFLAG(&huart6);
+
+        uint16_t this_time_rx_len = 0;
+        uint8_t *p_data;
+
+        // 判断当前 DMA 使用的是哪个缓冲区
+        if ((huart6.hdmarx->Instance->CR & DMA_SxCR_CT) == RESET)
+        {
+            __HAL_DMA_DISABLE(huart6.hdmarx);
+            this_time_rx_len = USART_RX_BUF_LENGHT - __HAL_DMA_GET_COUNTER(huart6.hdmarx);
+            p_data = usart6_buf[0];
+            
+            // 重新设置计数器并切换缓存
+            __HAL_DMA_SET_COUNTER(huart6.hdmarx, USART_RX_BUF_LENGHT);
+            huart6.hdmarx->Instance->CR |= DMA_SxCR_CT;
+            __HAL_DMA_ENABLE(huart6.hdmarx);
+        }
+        else
+        {
+            __HAL_DMA_DISABLE(huart6.hdmarx);
+            this_time_rx_len = USART_RX_BUF_LENGHT - __HAL_DMA_GET_COUNTER(huart6.hdmarx);
+            p_data = usart6_buf[1];
+
+            __HAL_DMA_SET_COUNTER(huart6.hdmarx, USART_RX_BUF_LENGHT);
+            huart6.hdmarx->Instance->CR &= ~(DMA_SxCR_CT);
+            __HAL_DMA_ENABLE(huart6.hdmarx);
+        }
+
+        /* ================= 嵌入新解析逻辑 ================= */
+        for(uint16_t i = 0; i < this_time_rx_len; i++)
+        {
+            // 将 DMA 接收到的每一字节喂给新写的状态机
+            // 注意：RMRefereeSystemParse 内部调用了 RMRefereeSystemGetData(MyRefereeSys8Data)
+            // 所以我们需要先更新 MyRefereeSys8Data
+            MyRefereeSys8Data = p_data[i];
+            RMRefereeSystemParse(); 
+        }
+    }
+}
+}
