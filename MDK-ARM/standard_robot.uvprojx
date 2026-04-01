@@ -905,14 +905,14 @@
               <FilePath>..\application\servo_task.c</FilePath>
             </File>
             <File>
-              <FileName>referee_usart_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\application\referee_usart_task.c</FilePath>
+              <FileName>RMRefereeSystem.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\application\RMRefereeSystem.cpp</FilePath>
             </File>
             <File>
-              <FileName>referee.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\application\referee.c</FilePath>
+              <FileName>RMRefereeSystemCRC.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\application\RMRefereeSystemCRC.cpp</FilePath>
             </File>
           </Files>
         </Group>

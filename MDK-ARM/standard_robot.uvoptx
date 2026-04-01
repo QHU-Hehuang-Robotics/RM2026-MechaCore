@@ -1410,24 +1410,24 @@
     <File>
       <GroupNumber>8</GroupNumber>
       <FileNumber>98</FileNumber>
-      <FileType>1</FileType>
+      <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\application\referee_usart_task.c</PathWithFileName>
-      <FilenameWithoutPath>referee_usart_task.c</FilenameWithoutPath>
+      <PathWithFileName>..\application\RMRefereeSystem.cpp</PathWithFileName>
+      <FilenameWithoutPath>RMRefereeSystem.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>8</GroupNumber>
       <FileNumber>99</FileNumber>
-      <FileType>1</FileType>
+      <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\application\referee.c</PathWithFileName>
-      <FilenameWithoutPath>referee.c</FilenameWithoutPath>
+      <PathWithFileName>..\application\RMRefereeSystemCRC.cpp</PathWithFileName>
+      <FilenameWithoutPath>RMRefereeSystemCRC.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
