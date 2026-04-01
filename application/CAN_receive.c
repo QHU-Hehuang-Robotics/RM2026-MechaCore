@@ -30,6 +30,7 @@
 
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
+extern void Cap_UpdateStatus(uint8_t *rx_buf);
 //motor data read
 #define get_motor_measure(ptr, data)                                    \
     {                                                                   \
@@ -93,6 +94,11 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
           case CAN_DM4340_M1_FEEDBACK_ID : 
         {
             decode_dm_motor(dm_motor_measure,rx_data);
+            break;
+        }
+        case CAN_Cap_ID :
+        {
+            Cap_UpdateStatus(rx_data);
             break;
         }
 

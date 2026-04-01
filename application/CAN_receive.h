@@ -42,6 +42,7 @@ typedef enum
     CAN_DM4340_M1_ID = 0x01, 
     CAN_DM4340_M1_FEEDBACK_ID = 0x11,
 
+    CAN_Cap_ID = 0x061,
 
 } can_msg_id_e;
 
