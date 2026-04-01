@@ -40,6 +40,10 @@ typedef struct __attribute__((packed)) {
     uint8_t cap_energy_percent;  // 电容剩余能量 (0-255映射0-100%)
 } PowerStatus_t;
 
-void Cap_PostStatusFeedback(PowerControl_t Cap_PowerControl);
+#define CAP_IS_OUTPUT_RUNNING() ((SuperCap_Status.status_error_code >> 7) & 0x01)
+#define CAP_GET_ERROR_MASK()    (SuperCap_Status.status_error_code & 0x7F)
+
+void Cap_SendControlCommand(PowerControl_t Cap_PowerControl);
+void Cap_UpdateStatus(uint8_t *rx_buf);
 
 #endif
