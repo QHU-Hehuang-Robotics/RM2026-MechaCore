@@ -1,7 +1,8 @@
 #ifndef SUPERCAPACITOR_H
 #define SUPERCAPACITOR_H
 
-#include "main.h"
+#include "struct_typedef.h"
+#include "can.h"
 
 #define ERROR_UNDER_VOLTAGE 0b00000001
 #define ERROR_OVER_VOLTAGE 0b00000010
@@ -10,6 +11,11 @@
 #define ERROR_HIGH_TEMPERATURE 0b00010000
 #define ERROR_NO_POWER_INPUT 0b00100000
 #define ERROR_CAPACITOR 0b01000000
+
+#define Cap_CAN hcan1
+
+#define CAN_SuperCapacitor_ID 0x051
+
 
 typedef struct __attribute__((packed)) {
     uint8_t enable_dcdc    : 1;  // DCDC输出使能 (1:开启, 0:关闭)
@@ -33,5 +39,7 @@ typedef struct __attribute__((packed)) {
 
     uint8_t cap_energy_percent;  // 电容剩余能量 (0-255映射0-100%)
 } PowerStatus_t;
+
+void Cap_PostStatusFeedback(PowerControl_t Cap_PowerControl);
 
 #endif
